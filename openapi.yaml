@@ -1,0 +1,92 @@
+openapi: "3.0.0"
+info:
+  title: "BabyAGI Plugin API"
+  version: "1.0.0"
+paths:
+  /set_objective:
+    post:
+      summary: "Set the objective"
+      operationId: "setObjective"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: "object"
+              properties:
+                objective:
+                  type: "string"
+      responses:
+        200:
+          description: "Objective set successfully"
+          content:
+            application/json:
+              schema:
+                type: "object"
+                properties:
+                  status:
+                    type: "string"
+  /add_task:
+    post:
+      summary: "Add a new task"
+      operationId: "addTask"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: "object"
+              properties:
+                task_name:
+                  type: "string"
+      responses:
+        200:
+          description: "Task added successfully"
+          content:
+            application/json:
+              schema:
+                type: "object"
+                properties:
+                  status:
+                    type: "string"
+  /get_task_list:
+    get:
+      summary: "Get the list of tasks"
+      operationId: "getTaskList"
+      responses:
+        200:
+          description: "Task list retrieved successfully"
+          content:
+            application/json:
+              schema:
+                type: "object"
+                properties:
+                  task_list:
+                    type: "array"
+                    items:
+                      type: "string"
+  /execute_next_task:
+    post:
+      summary: "Execute the next task and update the task list"
+      operationId: "executeNextTask"
+      responses:
+        200:
+          description: "Task executed successfully and task list updated"
+          content:
+            application/json:
+              schema:
+                type: "object"
+                properties:
+                  task_id:
+                    type: "integer"
+                  task_name:
+                    type: "string"
+                  result:
+                    type: "string"
+                  new_tasks:
+                    type: "array"
+                    items:
+                      type: "object"
+                      properties:
+                        task_name:
+                          type: "string"

@@ -1,0 +1,18 @@
+{
+  "schema_version": "v1",
+  "name_for_human": "BabyAGI Plugin",
+  "name_for_model": "babyagi",
+  "description_for_human": "Plugin for running autonomous agents to complete a final goal using BabyAGI.",
+  "description_for_model": "Plugin for running autonomous agents to complete a final goal using BabyAGI.",
+  "auth": {
+    "type": "none"
+  },
+  "api": {
+    "type": "openapi",
+    "url": "https://localhost/openapi.yaml",
+    "is_user_authenticated": false
+  },
+  "logo_url": "https://localhost/logo.png",
+  "contact_email": "support@example.com",
+  "legal_info_url": "http://www.example.com/legal"
+}
