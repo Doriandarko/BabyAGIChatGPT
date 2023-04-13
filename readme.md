@@ -34,7 +34,6 @@ The plugin provides several API endpoints to interact with BabyAGI:
 - `/get_task_list`: Retrieve the current task list.
 - `/execute_next_task`: Execute the next task in the task list and create new tasks based on the result.
 
-To use the plugin, you can make API calls to the endpoints using tools like [Postman](https://www.postman.com/) or by writing a script to interact with the API.
 
 ## Example
 
