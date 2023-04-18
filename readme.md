@@ -19,6 +19,8 @@ OPENAI_API_KEY = "your_openai_api_key_here"
 PINECONE_API_KEY = "your_pinecone_api_key_here"
 pinecone_environment="YOUR ENV",
 table_name="YOUR TABLE NAME",
+GOOGLE_API_KEY = ""
+CUSTOM_SEARCH_ENGINE_ID = ""
 ```
 
 3. Upldate your localhost link
