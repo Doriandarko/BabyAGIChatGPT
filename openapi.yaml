@@ -1,6 +1,6 @@
 openapi: "3.0.0"
 info:
-  title: "BabyAGI Plugin API"
+  title: "OldBabyAGI"
   version: "1.0.0"
 paths:
   /set_objective:
