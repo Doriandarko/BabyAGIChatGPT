@@ -1,6 +1,6 @@
-# BabyAGI ChatGPT Plugin
+# BabyAGI ChatGPT Plugin (plus search)
 
-This is a ChatGPT plugin based on the BabyAGI project by [@yoheinakajima]. This plugin adapts the original BabyAGI code to work as a plugin using Quart, an asynchronous web framework.
+This is a ChatGPT plugin based on the BabyAGI project by [@yoheinakajima]. This plugin adapts the original BabyAGI code to work as a plugin using Quart, an asynchronous web framework. I also added search via Google API. 
 
 ## Installation
 
