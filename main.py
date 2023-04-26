@@ -23,7 +23,7 @@ class BabyAGI:
                pinecone_api_key,
                google_api_key,
                custom_search_engine_id,
-               pinecone_environment="asia-southeast1-gcp",
+               pinecone_environment="us-central1-gcp",
                table_name="test-table",
                first_task="Develop a task list"):
     self.openai_api_key = openai_api_key
@@ -57,18 +57,22 @@ class BabyAGI:
       input=[text], model="text-embedding-ada-002")["data"][0]["embedding"]
 
   def task_creation_agent(self, objective: str, result: str,
-                          task_description: str, task_list: List[str]):
-    prompt = f"You are an task creation AI that uses the result of an execution agent to create new tasks with the following objective: {objective}, The last completed task has the result: {result}. This result was based on this task description: {task_description}. These are incomplete tasks: {', '.join(task_list)}. Based on the result, create new tasks to be completed by the AI system that do not overlap with incomplete tasks. Return the tasks as an array."
+                        task_description: str, task_list: List[str]):
+    messages = [
+        {"role": "system", "content": "You are a task creation AI that uses the result of an execution agent to create new tasks."},
+        {"role": "user", "content": f"Objective: {objective}\nResult: {result}\nTask description: {task_description}\nIncomplete tasks: {', '.join(task_list)}"},
+    ]
 
-    response = openai.Completion.create(engine="text-davinci-003",
-                                        prompt=prompt,
-                                        temperature=0.5,
-                                        max_tokens=100,
-                                        top_p=1,
-                                        frequency_penalty=0,
-                                        presence_penalty=0)
-    new_tasks = response.choices[0].text.strip().split('\n')
+    response = openai.ChatCompletion.create(
+        model="gpt-3.5-turbo",
+        messages=messages
+    )
+
+    new_tasks_text = response.choices[0].message['content'].strip()
+    new_tasks = new_tasks_text.split('\n')
     return [{"task_name": task_name} for task_name in new_tasks]
+
+
 
   async def execution_agent(self, objective: str, task: str) -> str:
     context = await self.context_agent(index="test-table",
@@ -76,16 +80,22 @@ class BabyAGI:
                                        n=5)
     context_str = '\n'.join(context)
 
-    response = openai.Completion.create(
-      engine="text-davinci-003",
-      prompt=
-      f"You are an AI who performs one task based on the following objective: {objective}. Your task: {task}\n\nContext:\n{context_str}\n\nResponse:",
-      temperature=0.7,
+    # Prepare messages for gpt-3.5-turbo
+    messages = [
+        {"role": "system", "content": "You are a helpful assistant."},
+        {"role": "user", "content": f"Objective: {objective}. Task: {task}."},
+    ]
+    for snippet in context_str.split('\n'):
+        messages.append({"role": "assistant", "content": snippet})
+
+    response = openai.ChatCompletion.create(
+      model="gpt-3.5-turbo",
+      messages=messages,
       max_tokens=2000,
-      top_p=1,
-      frequency_penalty=0,
-      presence_penalty=0)
-    return response.choices[0].text.strip()
+      temperature=0.7,
+    )
+    return response['choices'][0]['message']['content'].strip()
+
 
   async def context_agent(self, query: str, index: str, n: int):
     # Get search results
