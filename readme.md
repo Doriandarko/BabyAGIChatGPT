@@ -12,6 +12,11 @@ To install the BabyAGI ChatGPT plugin on [Replit](https://replit.com/):
 pip install openai quart quart-cors pinecone-client
 ```
 
+(Alternatively, run this in shell)
+```bash
+poetry install
+```
+
 2. Replace the `OPENAI_API_KEY` and `PINECONE_API_KEY` and the rest of the variables.
 
 ```python
