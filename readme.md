@@ -28,7 +28,7 @@ GOOGLE_API_KEY = ""
 CUSTOM_SEARCH_ENGINE_ID = ""
 ```
 
-3. Upldate your localhost link
+3. Update your localhost link
 
 4. Save and run the Repl.
 
